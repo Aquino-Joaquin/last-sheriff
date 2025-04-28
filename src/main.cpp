@@ -4,7 +4,8 @@
 #include "Map.h"
 #include "resource_dir.h"	// utility header for SearchAndSetResourceDir
 #include <iostream>
-
+using namespace std;
+#include "Menu.h"
 
 
 
@@ -12,61 +13,44 @@
 
 int main ()
 {
-	// Tell the window to use vsync and work on high DPI displays
-	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
+	
 
-	// Create the window and OpenGL context
-	InitWindow(1280, 720, "Game Project");
+	InitWindow(1280, 720 , "Game Project");
 	SetTargetFPS(60);
-
-	// Utility function from resource_dir.h to find the resources folder and set it as the current working directory so we can load from it
-	SearchAndSetResourceDir("resources");
-
-
-
-	// Load a texture from the resources directory
-	Texture2D playerTexture = LoadTexture("wabbit_alpha.png");
 	
-
-
+	int map_size = GetScreenHeight();
+	Map world_map(map_size/40,map_size/40);
+	Button start_button("resources/start_button.png",{100,100});
+	Button end_button("resources/exit_button.png",{300,300});
+	Menu game_menu("resources/menu_background.png",start_button,end_button);
 	
-	//player sprite
+	int menu_option = -1;
+	
+    while (!WindowShouldClose() && menu_option != game_menu.end) {
 
-	Map world_map(20,20);
-	
-	
-    while (!WindowShouldClose()) {
+		
+
         
 		
         BeginDrawing();
-        ClearBackground(GRAY);
-
+		if(menu_option == -1){
+			ClearBackground(GRAY);
+			game_menu.display_menu();
+			menu_option = game_menu.check_buttons();
+		}
 		
-		
-        // Dibujar el mapa
-        world_map.draw_map();
-		// Draws the player
-        //Vector2 playerPos = WorldToScreen(player.destRectangle.x, player.destRectangle.y, transform);
-		//doesnt work for now
-		//movePlayer(&player,playerPos);
+		if(menu_option == game_menu.start){
+			ClearBackground(GRAY);
+			world_map.draw_map();
+		}else if(menu_option == game_menu.end){
 
-		//DrawTexturePro(player.texture, {0, 0, (float)player.texture.width, (float)player.texture.height}, player.destRectangle, {0, 0}, 0.0f, WHITE);
-
-
-
-
-		
-        
-        
-
+			menu_option = game_menu.end;
+		}
 
         EndDrawing();
 	}
 
-	// cleanup
-	// unload our texture so it can be cleaned up
-	UnloadTexture(playerTexture);
-
+	
 	
 
 	// destroy the window and cleanup the OpenGL context
