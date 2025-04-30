@@ -6,6 +6,7 @@
 #include <iostream>
 using namespace std;
 #include "Menu.h"
+#include "Player.h"
 
 
 
@@ -23,6 +24,8 @@ int main ()
 	Button start_button("resources/start_button.png",{100,100});
 	Button end_button("resources/exit_button.png",{300,300});
 	Menu game_menu("resources/menu_background.png",start_button,end_button);
+
+	Player character(100,"resources/wabbit_alpha.png",5,5);
 	
 	int menu_option = -1;
 	
@@ -42,6 +45,7 @@ int main ()
 		if(menu_option == game_menu.start){
 			ClearBackground(GRAY);
 			world_map.draw_map();
+			character.move_player(world_map);
 		}else if(menu_option == game_menu.end){
 
 			menu_option = game_menu.end;

@@ -21,5 +21,6 @@ class Map{
         
         void draw_map();
 
+        bool is_within_bounds(int x, int y);
         
 };

@@ -1,11 +1,12 @@
 #include "Map.h"
-
-Map::Map(int width,int height){
-    this->width = width;
-    this->height = height;
+#include <iostream>
+using namespace std;
+Map::Map(int map_width,int map_height){
+    this->width = map_width;
+    this->height = map_height;
 }
-void Map::draw_tile(Vector2 center,int height, Color topColor){
-    int h = height * TILE_HEIGHT;
+void Map::draw_tile(Vector2 center,int map_height, Color topColor){
+    int h = map_height * TILE_HEIGHT;
         
     // Top
     Vector2 top    = { center.x, center.y - h };
@@ -42,25 +43,32 @@ void Map::draw_tile(Vector2 center,int height, Color topColor){
 //apply the transformation 
 Vector2 Map::world_to_screen(int x, int y){
     Matrix2x2 transform = {
-        (0.5 * TILE_WIDTH), (-0.5 * TILE_WIDTH),
-        (0.5 * TILE_HEIGHT), (0.5 * TILE_HEIGHT)
+        static_cast<float>(0.5 * TILE_WIDTH), static_cast<float>(-0.5 * TILE_WIDTH),
+        static_cast<float>(0.5 * TILE_HEIGHT), static_cast<float>(0.5 * TILE_HEIGHT)
     };
     return {
-        (float)(x * transform.m00 + y * transform.m01) + GetScreenWidth()/2,  
-        (float)(x * transform.m10 + y * transform.m11) + GetScreenHeight()/10   
+        static_cast<float>(x * transform.m00 + y * transform.m01) + GetScreenWidth()/2,  
+        static_cast<float>(x * transform.m10 + y * transform.m11) + GetScreenHeight()/10   
     };
 }
 //draw the map
 void Map::draw_map(){
+    
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             Vector2 screenPos = world_to_screen(x, y);
+            //cout<<"x : "<<screenPos.x<<" y : "<<screenPos.y<<endl;
             int tileHeight = 1;
             draw_tile(screenPos, tileHeight, BLACK);
             
         }
     }
+    
 }
+bool Map::is_within_bounds(int x, int y) {
+    return x >= 0 && x < (width -2)  && y >= 0 && y < (height-2);
+}
+
 
 
         

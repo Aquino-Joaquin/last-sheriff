@@ -13,6 +13,6 @@ void Robot::set_life(int life){
 void Robot::draw(Vector2 position){
     DrawTextureV(skin,position,WHITE);
 }
-Robot::~Robot(){
-    UnloadTexture(skin);
-}
+// Robot::~Robot(){
+//     UnloadTexture(skin);
+// }
