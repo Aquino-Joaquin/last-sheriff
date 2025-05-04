@@ -1,18 +1,22 @@
 #include "Robot.h"
 
-Robot::Robot(int life, const char* skin_path){
-    this->life = life;
+// Constructor: initializes robot life and loads its texture from the given path
+Robot::Robot(int life_robot, const char* skin_path) {
+    this->life = life_robot;
     this->skin = LoadTexture(skin_path);
 }
-int Robot::get_life(){
+
+// Getter for the robot's life
+int Robot::get_life() {
     return this->life;
 }
-void Robot::set_life(int life){
-    this->life = life;
+
+// Setter for the robot's life
+void Robot::set_life(int new_life) {
+    this->life = new_life;
 }
-void Robot::draw(Vector2 position){
-    DrawTextureV(skin,position,WHITE);
+
+// Draws the robot texture at the specified screen position
+void Robot::draw(Vector2 position) {
+    DrawTextureV(skin, position, WHITE);
 }
-// Robot::~Robot(){
-//     UnloadTexture(skin);
-// }
