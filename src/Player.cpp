@@ -5,9 +5,8 @@ using namespace std;
 // Constructor: initializes player life and texture using base Robot constructor,
 // and sets the initial player position on the map
 Player::Player(int player_life, const char* skin_path, int pos_x, int pos_y)
-    : Robot(player_life, skin_path) {
-    playerX = pos_x;
-    playerY = pos_y;
+    : Robot(player_life, skin_path,pos_x,pos_y) {
+    
 }
 
 // Cooldown values for controlling player movement speed
@@ -16,8 +15,8 @@ float lastMoveTime = 0.0f;   // Time of the last movement
 
 // Moves the player if movement keys are pressed and cooldown allows it
 void Player::move_player(Map& world_map) {
-    int newX = playerX;
-    int newY = playerY;
+    int newX = position.x;
+    int newY = position.y;
 
     float currentTime = GetTime();
 
@@ -30,12 +29,12 @@ void Player::move_player(Map& world_map) {
 
         // Only update player position if new coordinates are within bounds
         if (world_map.is_within_bounds(newX, newY)) {
-            playerX = newX;
-            playerY = newY;
+            position.x = newX;
+            position.y = newY;
         }
     }
 
     // Convert world position to screen coordinates and draw the player
-    Vector2 player_map_position = world_map.world_to_screen(playerX, playerY);
+    Vector2 player_map_position = world_map.world_to_screen(position.x, position.y);
     DrawTexture(skin, player_map_position.x, player_map_position.y, WHITE);
 }

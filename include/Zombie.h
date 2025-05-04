@@ -2,7 +2,7 @@
 #include "Robot.h"
 class Zombie : public Robot{
     public:
-        Zombie(int life, const char* skin_path) : Robot(life,skin_path){}
+        Zombie(int life, const char* skin_path,int pos_x, int pos_y);
         void attack();
 
 };
