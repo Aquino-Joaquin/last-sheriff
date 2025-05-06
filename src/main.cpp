@@ -5,6 +5,7 @@
 using namespace std;
 #include "Menu.h"
 #include "Player.h"
+#include "Zombie.h"
 
 int main() {
     // Initialize the game window
@@ -21,7 +22,8 @@ int main() {
     Menu game_menu("resources/menu_background.png", start_button, end_button);
 
     // Create the player character
-    Player character(100, "resources/wabbit_alpha.png", 5, 5);
+    Player character(100, "resources/wabbit_alpha.png",{5,5});
+    Zombie enemy(100,"resources/wabbit_alpha.png",{10,10},0.4);
 
     int menu_option = -1; // -1 means menu is currently active
 
@@ -40,6 +42,7 @@ int main() {
             ClearBackground(GRAY);
             world_map.draw_map();
             character.move_player(world_map);
+            enemy.attack(character,world_map,1);
         } else if (menu_option == game_menu.end) {
             // Exit option selected
             menu_option = game_menu.end;

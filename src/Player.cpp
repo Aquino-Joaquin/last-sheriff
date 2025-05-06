@@ -4,8 +4,8 @@ using namespace std;
 
 // Constructor: initializes player life and texture using base Robot constructor,
 // and sets the initial player position on the map
-Player::Player(int player_life, const char* skin_path, int pos_x, int pos_y)
-    : Robot(player_life, skin_path,pos_x,pos_y) {
+Player::Player(int player_life, const char* skin_path, Vector2 position)
+    : Robot(player_life, skin_path,position) {
     
 }
 
@@ -35,6 +35,5 @@ void Player::move_player(Map& world_map) {
     }
 
     // Convert world position to screen coordinates and draw the player
-    Vector2 player_map_position = world_map.world_to_screen(position.x, position.y);
-    DrawTexture(skin, player_map_position.x, player_map_position.y, WHITE);
+    draw_on_map(position,world_map);
 }
