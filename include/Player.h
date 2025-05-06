@@ -5,7 +5,7 @@
 class Player : public Robot{
     
     public:
-        Player(int life, const char* skin_path,int pos_x,int pos_y);
+        Player(int life, const char* skin_path,Vector2 position);
         void move_player(Map& world_map);
 
 };
