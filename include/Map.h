@@ -17,7 +17,7 @@ class Map{
         
         void draw_tile(Vector2 center,int height, Color topColor);
 
-        Vector2 world_to_screen(int x, int y);
+        Vector2 world_to_screen(float x, float y);
         
         void draw_map();
 
