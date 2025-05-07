@@ -6,9 +6,7 @@ Zombie::Zombie(int life, const char* skin_path, Vector2 position, float speed)
     this->speed_cooldown = speed;
 }
 
-bool Zombie::checkZombiePlayerCollision(Player& character,Map& world_map){
-    return CheckCollisionRecs(getRectangle(world_map),character.getRectangle(world_map));
-}
+
 //basic follow method
 void Zombie::follow_player(Player& my_player,Map& world_map){
     
