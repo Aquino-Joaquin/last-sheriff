@@ -44,7 +44,7 @@ void Map::draw_tile(Vector2 center, int map_height, Color topColor) {
 }
 
 // Converts world coordinates (x, y) to screen coordinates using isometric transformation
-Vector2 Map::world_to_screen(int x, int y) {
+Vector2 Map::world_to_screen(float x, float y) {
     Matrix2x2 transform = {
         static_cast<float>(0.5 * TILE_WIDTH), static_cast<float>(-0.5 * TILE_WIDTH),
         static_cast<float>(0.5 * TILE_HEIGHT), static_cast<float>(0.5 * TILE_HEIGHT)
