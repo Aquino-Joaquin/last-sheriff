@@ -1,11 +1,10 @@
 #pragma once
 #include "raylib.h"
+#include "Tile.h"
+#include <vector>
 class Map{
     private:
-        const int TILE_WIDTH = 64;
-        const int TILE_HEIGHT = 32;
-        int width;
-        int height;
+        
         struct Matrix2x2
         {
             float m00 , m01;
@@ -13,14 +12,16 @@ class Map{
         };
 
     public:
-        Map(int width, int height);
-        
-        void draw_tile(Vector2 center,int height, Color topColor);
-
-        Vector2 world_to_screen(float x, float y);
+        std::vector<Tile> walkable_tiles;
+        std::vector<Tile> no_walkable_tiles;
+        std::vector<Tile> borders_tiles;
+        Map();
+        static Vector2 world_to_screen(float x, float y);
         
         void draw_map();
 
-        bool is_within_bounds(int x, int y);
+        bool is_within_bounds(Vector2 screePos);
+        bool is_walkable(Rectangle screenPos);
+
         
 };

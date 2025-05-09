@@ -15,6 +15,6 @@ private:
 public:
     Bullet(Vector2 start, int direction,float speed);
     void update();
-    void draw(Map& world_map);
-    bool is_on_map(Map& world_map) const;
+    void draw();
+    bool is_on_map() const;
 };
