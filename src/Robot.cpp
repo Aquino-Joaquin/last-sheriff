@@ -1,5 +1,6 @@
 #include "Robot.h"
-
+#include <iostream>
+using namespace std;
 // Constructor: initializes robot life and loads its texture from the given path
 Robot::Robot(int life_robot, const char* skin_path, Vector2 position) {
     this->life = life_robot;
@@ -20,12 +21,19 @@ void Robot::set_life(int new_life) {
 
 // Draws the robot texture at the specified screen position
 void Robot::draw_on_map(Vector2 position,Map& world_map) {
-    Vector2 map_position = world_map.world_to_screen(position.x,position.y);
-    DrawTextureV(skin, map_position, WHITE);
+    if(alive){
+        Vector2 map_position = world_map.world_to_screen(position.x,position.y);
+        DrawTextureV(skin, map_position, WHITE);
+    }
+    
 }
 Rectangle Robot::getRectangle(Map& world_map) {
     Vector2 screenPos = world_map.world_to_screen(position.x, position.y);
     return Rectangle{screenPos.x, screenPos.y, static_cast<float>(skin.width), static_cast<float>(skin.height)};
+}
+Rectangle Robot::getRectangleAt(float x, float y){
+    Vector2 screenPos = Map::world_to_screen(x,y);
+    return Rectangle{screenPos.x , screenPos.y, static_cast<float>(skin.width), static_cast<float>(skin.height)};
 }
 
 Vector2 Robot::get_position(){
@@ -33,4 +41,10 @@ Vector2 Robot::get_position(){
 }
 bool Robot::check_collision(Robot& my_robot,Map& world_map){
     return CheckCollisionRecs(getRectangle(world_map),my_robot.getRectangle(world_map));
+}
+bool Robot::check_alive(){
+    if(get_life() <= 0){
+        alive = false;
+    }
+    return alive;
 }

@@ -4,6 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/build/external/raylib-master/src/**",
+                "${workspaceFolder}/build/external/**",
                 "${workspaceFolder}/include/**",
                 "${workspaceFolder}/src/**"
             ],
@@ -43,7 +44,7 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/build/external/raylib-master/src/**",
+                "${workspaceFolder}/build/external/**",
                 "${workspaceFolder}/include/**",
                 "${workspaceFolder}/src/**"
             ],

@@ -22,18 +22,20 @@ void Bullet::update() {
     
 }
 
-void Bullet::draw(Map& world_map) {
+void Bullet::draw() {
     if(active){
-        Vector2 position_on_map = world_map.world_to_screen(position.x,position.y);
+        Vector2 position_on_map = Map::world_to_screen(position.x,position.y);
         DrawCircleV(position_on_map, radius, color);
     }
-    if(!is_on_map(world_map)){
+    if(!is_on_map()){
         active = false;
         cout<<"Funciona"<<endl;
     }
     
 }
 
-bool Bullet::is_on_map(Map& world_map) const {
-    return world_map.is_within_bounds(position.x,position.y);
+bool Bullet::is_on_map() const {
+    Vector2 screen_pos = Map::world_to_screen(position.x, position.y);
+    return (screen_pos.x > 0 && screen_pos.x < GetScreenWidth()) &&
+           (screen_pos.y > 0 && screen_pos.y < GetScreenHeight());
 }

@@ -12,10 +12,10 @@ Gun::Gun(std::string name, Vector2 gun_position, const char* gun_texture_path, i
     this->last_fire_time = 0.0;
 }
 
-void Gun::fire_gun(Map& world_map){
+void Gun::fire_gun(){
     
     if(GetTime() - last_fire_time >= gun_speed){
-        Vector2 bullet_on_map = world_map.world_to_screen(gun_position.x,gun_position.y);
+        Vector2 bullet_on_map = Map::world_to_screen(gun_position.x,gun_position.y);
         if (IsKeyDown(KEY_W)) { 
             bullets.push_back(Bullet(gun_position,4,gun_speed));
         }
@@ -35,15 +35,15 @@ void Gun::fire_gun(Map& world_map){
 int Gun::get_ammo_count() const{
     return ammo_count;
 }
-void Gun::draw(Map& world_map){
+void Gun::draw(){
     
-    Vector2 position_on_map = world_map.world_to_screen(gun_position.x,gun_position.y);
+    Vector2 position_on_map = Map::world_to_screen(gun_position.x,gun_position.y);
     DrawTexture(gun_texture,position_on_map.x,position_on_map.y,WHITE);
 
 }
-void Gun::update(Map& world_map, Player my_player){
+void Gun::update(Player my_player){
     gun_position.x = my_player.get_position().x + 0.5;
     gun_position.y = my_player.get_position().y;
-    draw(world_map);
+    draw();
  }
 

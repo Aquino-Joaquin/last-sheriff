@@ -15,8 +15,9 @@ int main() {
     SetTargetFPS(60);
 
     // Create map with size based on screen height
-    int map_size = GetScreenHeight();
-    Map world_map(map_size / 40, map_size / 40);
+    
+    Map world_map;
+    
 
     // Create UI buttons for the menu
     Button start_button("resources/start_button.png", {100, 100});
@@ -25,7 +26,7 @@ int main() {
 
     // Create the player character
     Player character(100, "resources/wabbit_alpha.png",{5,5});
-    Zombie enemy(100,"resources/wabbit_alpha.png",{10,10},0.4);
+    Zombie enemy(100,"resources/wabbit_alpha.png",{15,5},0.1);
 
     Gun my_gun("Gun",{5,5},"resources/wabbit_alpha.png",10,100,0.5);
     
@@ -45,16 +46,16 @@ int main() {
 
         if (menu_option == game_menu.start) {
             // Start the game: draw map and move player
-            ClearBackground(GRAY);
+            ClearBackground(BLACK);
             world_map.draw_map();
             character.move_player(world_map);
-            enemy.attack(character,world_map,1);
-            my_gun.update(world_map,character);
+            enemy.attack(character,world_map,10);
+            my_gun.update(character);
             if(IsKeyDown(KEY_SPACE)){
-                my_gun.fire_gun(world_map);
+                my_gun.fire_gun();
             }
             for(auto& bullet: my_gun.bullets){
-                bullet.draw(world_map);
+                bullet.draw();
             }
             for(auto& bullet: my_gun.bullets){
                 bullet.update();

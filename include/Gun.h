@@ -21,8 +21,8 @@ private:
 public:
     std::vector<Bullet> bullets;
     Gun(std::string name, Vector2 gun_position, const char* gun_texture, int gun_damage, int ammo_count,float gun_speed);
-    void fire_gun(Map& world_map);         
-    void draw(Map& world_map);
-    void update(Map& world_map,Player my_player);
+    void fire_gun();         
+    void draw();
+    void update(Player my_player);
     int get_ammo_count() const;  
 };
