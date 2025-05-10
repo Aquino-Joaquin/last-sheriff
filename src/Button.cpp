@@ -1,5 +1,7 @@
 #include "Button.h"
+Button::Button(){
 
+}
 // Constructor: loads a texture from the given image path and sets the button's position
 Button::Button(const char* image_path, Vector2 image_position) {
     texture = LoadTexture(image_path);

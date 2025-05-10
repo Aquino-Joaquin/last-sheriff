@@ -29,7 +29,6 @@ void Bullet::draw() {
     }
     if(!is_on_map()){
         active = false;
-        cout<<"Funciona"<<endl;
     }
     
 }
@@ -38,4 +37,11 @@ bool Bullet::is_on_map() const {
     Vector2 screen_pos = Map::world_to_screen(position.x, position.y);
     return (screen_pos.x > 0 && screen_pos.x < GetScreenWidth()) &&
            (screen_pos.y > 0 && screen_pos.y < GetScreenHeight());
+}
+Vector2 Bullet::get_position(){
+    Vector2 position_on_map = Map::world_to_screen(position.x,position.y);
+    return position_on_map;
+}
+float Bullet::get_radius(){
+    return radius;
 }

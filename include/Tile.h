@@ -4,7 +4,7 @@
 #include <utility> 
 class Tile{
     public:
-        Tile(Vector2 position, float altura, Color sidesColor,bool wakable);
+        Tile(Vector2 position, float altura, Color sidesColor);
         void draw();
         void drawCollisionEdges();
         bool checkRectangleLineCollision(Rectangle rect, const std::vector<std::pair<Vector2, Vector2>>& lines);
@@ -16,6 +16,5 @@ class Tile{
         float depth;
         private:
         Color sideColor;
-        bool walkable;
 
 };

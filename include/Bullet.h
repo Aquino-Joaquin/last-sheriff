@@ -17,4 +17,6 @@ public:
     void update();
     void draw();
     bool is_on_map() const;
+    Vector2 get_position();
+    float get_radius();
 };

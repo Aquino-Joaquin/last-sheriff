@@ -3,12 +3,11 @@
 #include <iostream>
 using namespace std;
 
-Tile::Tile(Vector2 position, float depth, Color sideColor,bool walkable) {
+Tile::Tile(Vector2 position, float depth, Color sideColor) {
 
     this->position = position;
     this->depth = depth;  
     this->sideColor = sideColor;
-    this->walkable = walkable;
 
     Vector2 screenPos = Map::world_to_screen(position.x, position.y);
     

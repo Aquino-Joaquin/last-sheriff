@@ -4,10 +4,13 @@ using namespace std;
 
 // Constructor: initializes player life and texture using base Robot constructor,
 // and sets the initial player position on the map
-Player::Player(int player_life, const char* skin_path, Vector2 position)
-    : Robot(player_life, skin_path,position) {
-    
+
+Player::Player(){
+
 }
+Player::Player(int player_life, const char* skin_path, Vector2 position)
+    : Robot(player_life, skin_path,position){
+    }   
 
 // Cooldown values for controlling player movement speed
 float moveCooldown = 0.001;   // Minimum time between moves
@@ -35,5 +38,7 @@ void Player::move_player(Map& world_map) {
         }
     }
 
-    draw_on_map(position, world_map);
+}
+bool Player::is_alive(){
+    return get_life() > 0;
 }

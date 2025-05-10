@@ -1,13 +1,15 @@
 #include "Gun.h"
 #include <math.h>
-Gun::Gun(std::string name, Vector2 gun_position, const char* gun_texture_path, int gun_damage, int ammo_count,float gun_speed)
+#include "Player.h"
+Gun::Gun(){
+
+}
+Gun::Gun(Vector2 gun_position, const char* gun_texture_path, int gun_damage, float gun_speed)
       
 {
-    this->name = name;
     this->gun_position = gun_position;
     gun_texture = LoadTexture(gun_texture_path);
     this->gun_damage = gun_damage;
-    this->ammo_count = ammo_count;
     this->gun_speed = gun_speed;
     this->last_fire_time = 0.0;
 }
@@ -32,18 +34,16 @@ void Gun::fire_gun(){
     }
 
 }
-int Gun::get_ammo_count() const{
-    return ammo_count;
-}
+
 void Gun::draw(){
     
     Vector2 position_on_map = Map::world_to_screen(gun_position.x,gun_position.y);
     DrawTexture(gun_texture,position_on_map.x,position_on_map.y,WHITE);
 
 }
-void Gun::update(Player my_player){
-    gun_position.x = my_player.get_position().x + 0.5;
-    gun_position.y = my_player.get_position().y;
+void Gun::update(Vector2 player_position){
+    gun_position.x = player_position.x + 0.5;
+    gun_position.y = player_position.y;
     draw();
  }
 
