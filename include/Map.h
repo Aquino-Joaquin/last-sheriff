@@ -18,6 +18,7 @@ class Map{
         Map();
         static Vector2 world_to_screen(float x, float y);
         
+        void init_map();
         void draw_map();
 
         bool is_within_bounds(Vector2 screePos);

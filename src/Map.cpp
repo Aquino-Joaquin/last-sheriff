@@ -22,9 +22,13 @@ Vector2 Map::world_to_screen(float x, float y) {
     };
 }
 
+void Map::init_map() {
+   borders_tiles.push_back(Tile({15,5},1,GRAY));
+}
+
 // Draws the entire map as a grid of tiles
 void Map::draw_map() {
-    borders_tiles.push_back(Tile({15,5},1,GRAY,false));
+    
     //walkable_tiles.push_back(Tile({15,5},1,GRAY,true));
     for(auto& tile:walkable_tiles){
         tile.draw();

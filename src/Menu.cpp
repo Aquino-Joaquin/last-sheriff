@@ -1,9 +1,11 @@
 #include "Menu.h"
 #include <iostream>
 using namespace std;
-
+Menu::Menu(){
+    
+}
 // Constructor: loads background texture and stores references to the start and end buttons
-Menu::Menu(const char* background_path, Button& start_button, Button& end_button)
+Menu::Menu(const char* background_path, Button start_button, Button end_button)
     : start_button(start_button), end_button(end_button)
 {
     background = LoadTexture(background_path);
