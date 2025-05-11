@@ -4,27 +4,33 @@
 Game::Game() {
     InitWindow(1280, 720, "Game Project");
     SetTargetFPS(60);
+    InitAudioDevice();
 
     start_menu = Menu(
-        "resources/menu_background.png",
-        Button("resources/start_button.png", {100, 100}),
-        Button("resources/exit_button.png", {300, 300})
+        "resources/background_startMenu.png",
+        "resources/start_menu.wav",
+        Button("resources/start_button.png", {450, 150}),
+        Button("resources/exit_button.png", {450, 400})
+        
     );
     end_menu = Menu(
-        "resources/menu_background.png",
-        Button("resources/start_button.png", {100, 100}),
-        Button("resources/exit_button.png", {300, 300})
+        "resources/background_EndGame.png",
+        "resources/end_menu.wav",
+        Button("resources/retry_button.png", {450, 150}),
+        Button("resources/exit_button.png", {450, 400})
     );
 
     round = 1;               // Start from round 1
     zombies_killed = 0;      // Counter for dead zombies
+    enviroment_sound = LoadSound("resources/zombie.wav");
+    
 }
 
 // Initialize or reset the game state
 void Game::init() {
     map.init_map();
-    my_player = Player(100, "resources/wabbit_alpha.png", {5, 5});
-    my_gun = Gun({my_player.get_position()}, "resources/wabbit_alpha.png", 10, 0.5);
+    my_player = Player(100,"resources/wabbit_alpha.png", {5, 5});
+    my_gun = Gun({my_player.get_position()},"resources/wabbit_alpha.png","resources/shot.mp3" ,10, 0.5);
 
     round = 1;
     zombies_killed = 0;
@@ -33,15 +39,37 @@ void Game::init() {
 
 // Spawn zombies based on current round number
 void Game::spawn_zombies() {
-    enemies.clear();
-    int zombie_count = 3 + round * 2;                    // More zombies each round
-    int base_life = 100 + (round - 1) * 20;              // Stronger zombies
-    float speed = 0.1f;
-    float spacing = 5.0f;
+    enemies.clear(); // Clear current enemies
 
-    for (int i = 0; i < zombie_count; ++i) {
-        Vector2 spawn_pos = {15 + i * spacing, 5};       // Spread out horizontally
-        enemies.emplace_back(base_life, "resources/wabbit_alpha.png", spawn_pos, speed);
+    zombies_to_spawn = 3 + round * 2; // Increase zombie count with each round
+    base_zombie_life = 100 + (round - 1) * 20; // Increase health based on round
+    zombie_speed = 0.1f;
+    zombie_spawn_timer = 0.0f;
+    spawning = true; // Activate spawning mode
+}
+
+void Game::update_zombie_spawning(float deltaTime) {
+    if (spawning && zombies_to_spawn > 0) {
+        zombie_spawn_timer += deltaTime;
+
+        if (zombie_spawn_timer >= zombie_spawn_delay) {
+            zombie_spawn_timer = 0.0f;
+
+            // Spawn a single zombie at the fixed position
+            enemies.emplace_back(
+                base_zombie_life,
+                "resources/wabbit_alpha.png",
+                zombie_spawn_position,
+                zombie_speed
+            );
+
+            zombies_to_spawn--;
+        }
+
+        // Disable spawning mode when finished
+        if (zombies_to_spawn == 0) {
+            spawning = false;
+        }
     }
 }
 
@@ -66,6 +94,9 @@ void Game::draw() {
 
 // Update game logic
 void Game::update() {
+    float deltaTime = GetFrameTime(); // Time elapsed since last frame
+    update_zombie_spawning(deltaTime); // Spawn zombies one at a time
+
     my_player.move_player(map);
     my_gun.update(my_player.get_position());
 
@@ -74,8 +105,7 @@ void Game::update() {
     for (auto& zombie : enemies) {
         if (zombie.is_alive()) {
             alive_zombies++;
-            // Zombie damage increases each round
-            int damage = 20 + (round - 1) * 5;
+            int damage = 20 + (round - 1) * 5; // Zombies get stronger each round
             zombie.attack(my_player, map, damage, enemies);
             zombie.take_damage(my_gun);
         }
@@ -85,8 +115,8 @@ void Game::update() {
         bullet.update();
     }
 
-    // If all zombies are dead, go to next round
-    if (alive_zombies == 0) {
+    // Start next round only when all zombies are dead and spawning is finished
+    if (!spawning && alive_zombies == 0) {
         round++;
         spawn_zombies();
     }
@@ -110,11 +140,16 @@ void Game::run() {
         }
 
         else if (menu_option == start_menu.start) {
+            if(IsSoundPlaying(start_menu.menu_sound)){
+                StopSound(start_menu.menu_sound);
+            }
             if (my_player.is_alive()) {
                 ClearBackground(BLACK);
                 draw();
                 update();
-
+                if(alive_zombies > 0 && !IsSoundPlaying(enviroment_sound)){
+                    PlaySound(enviroment_sound);
+                }
                 if (IsKeyDown(KEY_SPACE)) {
                     my_gun.fire_gun(my_player);
                 }
@@ -141,5 +176,6 @@ void Game::run() {
 
 // Destructor
 Game::~Game() {
+    CloseAudioDevice();
     CloseWindow();
 }
