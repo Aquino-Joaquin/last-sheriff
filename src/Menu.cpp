@@ -5,14 +5,18 @@ Menu::Menu(){
     
 }
 // Constructor: loads background texture and stores references to the start and end buttons
-Menu::Menu(const char* background_path, Button start_button, Button end_button)
+Menu::Menu(const char* background_path,const char* menu_sound_path ,Button start_button, Button end_button)
     : start_button(start_button), end_button(end_button)
 {
     background = LoadTexture(background_path);
+    menu_sound = LoadSound(menu_sound_path);
 }
 
 // Draws the menu background and both buttons
 void Menu::display_menu() {
+    if(!IsSoundPlaying(menu_sound)){
+        PlaySound(menu_sound);
+    }
     DrawTexture(background, 0, 0, WHITE);
     start_button.draw();
     end_button.draw();
