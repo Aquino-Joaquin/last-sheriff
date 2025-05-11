@@ -1,7 +1,6 @@
 #pragma once
 #include "Robot.h"
 #include "Map.h"
-#include "Gun.h"
 
 class Player : public Robot{
     
@@ -9,6 +8,7 @@ class Player : public Robot{
         Player();
         Player(int life, const char* skin_path,Vector2 position);
         void move_player(Map& world_map);
-        bool is_alive();
+        int last_direction = 1;
+        
 
 };
