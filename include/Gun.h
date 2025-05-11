@@ -14,11 +14,12 @@ private:
     float last_fire_time;
 
 public:
+    int last_direction = 1; 
     int gun_damage;  
     std::vector<Bullet> bullets;
     Gun();
     Gun(Vector2 gun_position, const char* gun_texture, int gun_damage, float gun_speed);
-    void fire_gun();         
+    void fire_gun(Player& player);         
     void draw();
     void update(Vector2 player_position);
 };

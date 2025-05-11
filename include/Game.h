@@ -16,6 +16,11 @@ class Game{
         void init();
         void update();
         void draw();
+        int round;                // Current round number
+        int zombies_killed;       // Number of zombies killed in current round
+        int alive_zombies = 0;
+
+        void spawn_zombies(); 
 
 
     private:

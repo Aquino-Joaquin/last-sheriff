@@ -24,12 +24,27 @@ void Player::move_player(Map& world_map) {
     float currentTime = GetTime();
 
     if (currentTime - lastMoveTime >= moveCooldown) {
-        if (IsKeyDown(KEY_W)) { newY -= 0.1; lastMoveTime = currentTime; }
-        else if (IsKeyDown(KEY_S)) { newY += 0.1; lastMoveTime = currentTime; }
-        else if (IsKeyDown(KEY_D)) { newX += 0.1; lastMoveTime = currentTime; }
-        else if (IsKeyDown(KEY_A)) { newX -= 0.1; lastMoveTime = currentTime; }
+        if (IsKeyDown(KEY_W)) { 
+            newY -= 0.1; 
+            last_direction = 4; 
+            lastMoveTime = currentTime; 
+        }
+        else if (IsKeyDown(KEY_S)) { 
+            newY += 0.1; 
+            last_direction = 3; 
+            lastMoveTime = currentTime; 
+        }
+        else if (IsKeyDown(KEY_D)) { 
+            newX += 0.1; 
+            last_direction = 1; 
+            lastMoveTime = currentTime; 
+        }
+        else if (IsKeyDown(KEY_A)) { 
+            newX -= 0.1; 
+            last_direction = 2; 
+            lastMoveTime = currentTime; 
+        }
 
-        // Crear un rectángulo para la posición futura
         Rectangle newRect = getRectangleAt(newX, newY);
 
         if (world_map.is_walkable(newRect)) {
@@ -37,8 +52,4 @@ void Player::move_player(Map& world_map) {
             position.y = newY;
         }
     }
-
-}
-bool Player::is_alive(){
-    return get_life() > 0;
 }
