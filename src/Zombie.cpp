@@ -1,9 +1,10 @@
 #include "Zombie.h"
 #include <iostream>
+#include <math.h>
 using namespace std;
 
-Zombie::Zombie(int life, const char* skin_path, Vector2 position, float speed) 
-: Robot(life,skin_path,position){
+Zombie::Zombie(int life,  Vector2 position,float speed, Animation skin_animated,Rectangle hitBox) 
+: Robot(life,position,skin_animated,hitBox){
     this->speed_cooldown = speed;
     this->last_move = GetTime();
 }
@@ -13,49 +14,65 @@ void Zombie::follow_player(Player& my_player, Map& world_map, std::vector<Zombie
     if (!alive) return;
 
     float currentTime = GetTime();
-    if (currentTime - last_move < speed_cooldown) return;
+    if ((currentTime - last_move) < speed_cooldown) return;
 
     float step = 0.1f;
     Vector2 target = my_player.get_position();
-    bool moved = false;
 
-    // Determine the differences in X and Y with respect to the player
     float diffX = target.x - position.x;
     float diffY = target.y - position.y;
 
-    // 1. Try moving in both X and Y simultaneously (diagonally) if possible
-    if (abs(diffX) > 0.1f && abs(diffY) > 0.1f) {
-        // Diagonal movement: adjust X and Y simultaneously
-        float newX = position.x + (diffX > 0 ? step : -step);
-        float newY = position.y + (diffY > 0 ? step : -step);
-        
-        Rectangle newRect = getRectangleAt(newX, newY);
-        if (world_map.is_walkable(newRect) && !collides_with_other_zombie(newRect, all_zombies)) {
-            position.x = newX;
-            position.y = newY;
-            moved = true;
-        }
-    }
-    
-    // 2. If unable to move diagonally, try moving in X or Y separately
-    if (!moved) {
-        // First, try moving in X
-        if (abs(diffX) > 0.1f) {
-            float newX = position.x + (diffX > 0 ? step : -step);
+    bool moved = false;
+
+    // Movimiento en X
+    if (fabs(diffX) > fabs(diffY)) {
+        if (diffX > 0.1f) {
+            float newX = position.x + step;
             Rectangle rectX = getRectangleAt(newX, position.y);
             if (world_map.is_walkable(rectX) && !collides_with_other_zombie(rectX, all_zombies)) {
                 position.x = newX;
+                animation_direction = 5; // Derecha
+                moving = true;
                 moved = true;
+                cout<<animation_direction<<endl;
+            }
+        } else if (diffX < -0.1f) {
+            float newX = position.x - step;
+            Rectangle rectX = getRectangleAt(newX, position.y);
+            if (world_map.is_walkable(rectX) && !collides_with_other_zombie(rectX, all_zombies)) {
+                position.x = newX;
+                animation_direction = 1; // Izquierda
+                moving = true;
+                moved = true;
+                cout<<animation_direction<<endl;
+
             }
         }
+    }
 
-        // Then try moving in Y if not moved in X
-        if (!moved && abs(diffY) > 0.1f) {
-            float newY = position.y + (diffY > 0 ? step : -step);
+    // Movimiento en Y si no se pudo mover en X
+    if (!moved) {
+        if (diffY > 0.1f) {
+            float newY = position.y + step;
             Rectangle rectY = getRectangleAt(position.x, newY);
             if (world_map.is_walkable(rectY) && !collides_with_other_zombie(rectY, all_zombies)) {
                 position.y = newY;
+                animation_direction = 7; // Abajo
+                moving = true;
                 moved = true;
+                cout<<animation_direction<<endl;
+
+            }
+        } else if (diffY < -0.1f) {
+            float newY = position.y - step;
+            Rectangle rectY = getRectangleAt(position.x, newY);
+            if (world_map.is_walkable(rectY) && !collides_with_other_zombie(rectY, all_zombies)) {
+                position.y = newY;
+                animation_direction = 3; // Arriba
+                moving = true;
+                moved = true;
+                cout<<animation_direction<<endl;
+
             }
         }
     }
@@ -64,7 +81,6 @@ void Zombie::follow_player(Player& my_player, Map& world_map, std::vector<Zombie
         last_move = currentTime;
     }
 }
-
 
 
 void Zombie::attack(Player& my_player, Map& world_map, int force, std::vector<Zombie>& all_zombies) {

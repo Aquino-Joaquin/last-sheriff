@@ -13,11 +13,13 @@ Gun::Gun(Vector2 gun_position, const char* gun_texture_path,const char* gun_soun
     this->gun_damage = gun_damage;
     this->gun_speed = gun_speed;
     this->last_fire_time = 0.0;
+    
 }
 
 void Gun::fire_gun(Player& player) {
     if (GetTime() - last_fire_time >= gun_speed) {
         bullets.push_back(Bullet(gun_position, player.last_direction, gun_speed));
+        player.attack_action = true;
         PlaySound(gun_sound);
         last_fire_time = GetTime();
     }
@@ -32,7 +34,7 @@ void Gun::draw(){
 
 }
 void Gun::update(Vector2 player_position){
-    gun_position.x = player_position.x + 0.5;
-    gun_position.y = player_position.y;
+    gun_position.x = player_position.x + 1.5;
+    gun_position.y = player_position.y + 0.2;
  }
 

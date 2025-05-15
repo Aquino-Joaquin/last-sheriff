@@ -23,6 +23,8 @@ public:
 
     Sound enviroment_sound;
 
+    Texture2D zombie_texture;
+
     void spawn_zombies(); // Starts the zombie spawning process
 
 private:
@@ -34,13 +36,13 @@ private:
     Menu end_menu;
 
     // Progressive zombie spawn variables
-    int zombies_to_spawn = 0;                   // How many zombies are left to spawn
-    float zombie_spawn_timer = 0.0f;            // Timer to control spawn delay
-    float zombie_spawn_delay = 2.5f;            // Delay between each zombie spawn
-    Vector2 zombie_spawn_position = {20, 5};    // Fixed spawn location
-    int base_zombie_life = 100;                 // Life of zombies in current round
-    float zombie_speed = 0.1f;                  // Speed of spawned zombies
-    bool spawning = false;                      // Whether zombies are currently spawning
+    int zombies_to_spawn = 0;                  
+    float zombie_spawn_timer = 0.0f;            
+    float zombie_spawn_delay = 2.5f;            
+    Vector2 zombie_spawn_position = {20, 5};    
+    int base_zombie_life = 100;                 
+    float zombie_speed = 0.1f;                  
+    bool spawning = false;                      
 
-    void update_zombie_spawning(float deltaTime); // Called every frame to spawn zombies progressively
+    void update_zombie_spawning(float deltaTime); 
 };

@@ -29,8 +29,13 @@ Game::Game() {
 // Initialize or reset the game state
 void Game::init() {
     map.init_map();
-    my_player = Player(100,"resources/wabbit_alpha.png", {5, 5});
-    my_gun = Gun({my_player.get_position()},"resources/wabbit_alpha.png","resources/shot.mp3" ,10, 0.5);
+
+    Texture2D player_skin = LoadTexture("resources/cowboy.png");
+    Animation player_animated(player_skin, 14, 10, 1.f / 9.f, 0.5f, 0, 7, 10, 13);
+    my_player = Player(100, {5, 5}, player_animated,{25,20,20,35});
+    my_gun = Gun({my_player.get_position()}, "resources/wabbit_alpha.png", "resources/shot.mp3", 10, 0.5);
+
+    zombie_texture = LoadTexture("resources/zombie.png");
 
     round = 1;
     zombies_killed = 0;
@@ -39,13 +44,13 @@ void Game::init() {
 
 // Spawn zombies based on current round number
 void Game::spawn_zombies() {
-    enemies.clear(); // Clear current enemies
+    enemies.clear(); 
 
-    zombies_to_spawn = 3 + round * 2; // Increase zombie count with each round
-    base_zombie_life = 100 + (round - 1) * 20; // Increase health based on round
+    zombies_to_spawn = 3 + round * 2;
+    base_zombie_life = 100 + (round - 1) * 20;
     zombie_speed = 0.1f;
     zombie_spawn_timer = 0.0f;
-    spawning = true; // Activate spawning mode
+    spawning = true;
 }
 
 void Game::update_zombie_spawning(float deltaTime) {
@@ -55,18 +60,20 @@ void Game::update_zombie_spawning(float deltaTime) {
         if (zombie_spawn_timer >= zombie_spawn_delay) {
             zombie_spawn_timer = 0.0f;
 
-            // Spawn a single zombie at the fixed position
+            // Usar textura ya cargada
+            Animation zombie_animated(zombie_texture, 36, 8, 1.0f / 16.0f, 0.8f, 4, 11, 0, 0);
+            Rectangle hitBoxRec = {40,30,20,40};
             enemies.emplace_back(
                 base_zombie_life,
-                "resources/wabbit_alpha.png",
                 zombie_spawn_position,
-                zombie_speed
+                zombie_speed,
+                zombie_animated,
+                hitBoxRec
             );
 
             zombies_to_spawn--;
         }
 
-        // Disable spawning mode when finished
         if (zombies_to_spawn == 0) {
             spawning = false;
         }
@@ -77,7 +84,7 @@ void Game::update_zombie_spawning(float deltaTime) {
 void Game::draw() {
     map.draw_map();
     my_player.draw_on_map();
-    my_gun.draw();
+    //my_gun.draw();
 
     for (auto& zombie : enemies) {
         zombie.draw_on_map();
@@ -142,6 +149,9 @@ void Game::run() {
         else if (menu_option == start_menu.start) {
             if(IsSoundPlaying(start_menu.menu_sound)){
                 StopSound(start_menu.menu_sound);
+            }
+            if(IsSoundPlaying(end_menu.menu_sound)){
+                StopSound(end_menu.menu_sound);
             }
             if (my_player.is_alive()) {
                 ClearBackground(BLACK);
