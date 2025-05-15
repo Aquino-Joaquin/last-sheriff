@@ -1,19 +1,24 @@
 #pragma once
 #include "raylib.h"
 #include "Map.h"
+#include "Animation.h"
 
 class Robot {
 protected:
     int life;
     int max_life; // Life maximum for health bar
-    Texture2D skin;
     Vector2 position;
+    Animation skin_animated;
+    Rectangle hitboxOffset; 
 
 public:
     bool alive = true;
+    int animation_direction;
+    bool moving;
+    bool attack_action = false;
 
     Robot();
-    Robot(int life_robot, const char* skin_path, Vector2 position);
+    Robot(int life_robot, Vector2 position,Animation skin_animated,Rectangle hitBox);
     
     int get_life();
     void set_life(int new_life);
@@ -25,4 +30,5 @@ public:
     Vector2 get_position();
     bool check_collision(Robot& my_robot);
     bool is_alive();
+    Rectangle getCollisionBox();
 };

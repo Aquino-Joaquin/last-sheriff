@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <iostream>
+#include <math.h>
 using namespace std;
 
 // Constructor: initializes player life and texture using base Robot constructor,
@@ -8,8 +9,9 @@ using namespace std;
 Player::Player(){
 
 }
-Player::Player(int player_life, const char* skin_path, Vector2 position)
-    : Robot(player_life, skin_path,position){
+Player::Player(int player_life,Vector2 position,Animation skin_animated,Rectangle hitbox)
+    : Robot(player_life,position,skin_animated,hitbox){
+        animation_direction = 4;
     }   
 
 // Cooldown values for controlling player movement speed
@@ -20,36 +22,68 @@ float lastMoveTime = 0.0f;   // Time of the last movement
 void Player::move_player(Map& world_map) {
     float newX = position.x;
     float newY = position.y;
-
     float currentTime = GetTime();
 
     if (currentTime - lastMoveTime >= moveCooldown) {
-        if (IsKeyDown(KEY_W)) { 
-            newY -= 0.1; 
-            last_direction = 4; 
-            lastMoveTime = currentTime; 
-        }
-        else if (IsKeyDown(KEY_S)) { 
-            newY += 0.1; 
-            last_direction = 3; 
-            lastMoveTime = currentTime; 
-        }
-        else if (IsKeyDown(KEY_D)) { 
-            newX += 0.1; 
-            last_direction = 1; 
-            lastMoveTime = currentTime; 
-        }
-        else if (IsKeyDown(KEY_A)) { 
-            newX -= 0.1; 
-            last_direction = 2; 
-            lastMoveTime = currentTime; 
+        bool moved = false;
+        Vector2 direction = { 0, 0 };
+
+        if (IsKeyPressed(KEY_SPACE) && !attack_action) {
+            attack_action = true;
+            moving = false;
+
+            animation_direction = last_direction == 1 ? 2 :
+                                  last_direction == 2 ? 6 :
+                                  last_direction == 3 ? 8 :
+                                  last_direction == 4 ? 4 : 4;
         }
 
-        Rectangle newRect = getRectangleAt(newX, newY);
-
-        if (world_map.is_walkable(newRect)) {
-            position.x = newX;
-            position.y = newY;
+        if (!attack_action) {
+            if (IsKeyDown(KEY_W)) {
+                direction.y -= 1;
+                last_direction = 4;
+                animation_direction = 4;
+                moving = true;
+                moved = true;
+            } else if (IsKeyDown(KEY_S)) {
+                direction.y += 1;
+                last_direction = 3;
+                animation_direction = 8;
+                moving = true;
+                moved = true;
+            } else if (IsKeyDown(KEY_D)) {
+                direction.x += 1;
+                last_direction = 1;
+                animation_direction = 2;
+                moving = true;
+                moved = true;
+            } else if (IsKeyDown(KEY_A)) {
+                direction.x -= 1;
+                last_direction = 2;
+                animation_direction = 6;
+                moving = true;
+                moved = true;
+            } else {
+                moving = false;
+            }
+        } else {
+            moving = false;
         }
+
+        if (moved) {
+            newX += direction.x * 0.1f;
+            newY += direction.y * 0.1f;
+
+            Rectangle newRect = getRectangleAt(newX, newY);
+            if (world_map.is_walkable(newRect)) {
+                position.x = newX;
+                position.y = newY;
+                lastMoveTime = currentTime;
+            }
+        }
+    }
+
+    if (attack_action && skin_animated.isAttackFinished()) {
+        attack_action = false;
     }
 }

@@ -78,10 +78,10 @@ bool Tile::checkRectangleLineCollision(Rectangle rect, const std::vector<std::pa
     Vector2 r4 = { rect.x, rect.y + rect.height };
 
     // Draw the rectangle edges for debugging purposes
-    DrawLineV(r1, r2, DARKGRAY);
-    DrawLineV(r2, r3, DARKGRAY);
-    DrawLineV(r3, r4, DARKGRAY);
-    DrawLineV(r4, r1, DARKGRAY);
+    DrawLineV(r1, r2, RED);
+    DrawLineV(r2, r3, RED);
+    DrawLineV(r3, r4, RED);
+    DrawLineV(r4, r1, RED);
 
     // Store the rectangle's edges as pairs of points
     Vector2 rectEdges[4][2] = {

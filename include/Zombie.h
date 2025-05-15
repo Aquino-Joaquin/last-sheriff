@@ -10,7 +10,7 @@ class Zombie : public Robot{
         float last_attack_time = 0.0f;
         float attack_cooldown = 1.0f;
     public:
-        Zombie(int life, const char* skin_path,Vector2 position, float speed);
+        Zombie(int life,Vector2 position, float speed,Animation skin_animated,Rectangle hitBox);
         void attack(Player& my_player,Map& world_map ,int force,std::vector<Zombie>& all_zombies);
         void follow_player(Player& my_player,Map& world_map,std::vector<Zombie>& all_zombies);
         void take_damage(Gun& my_gun);
