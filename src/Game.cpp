@@ -31,8 +31,8 @@ void Game::init() {
     map.init_map();
 
     Texture2D player_skin = LoadTexture("resources/cowboy.png");
-    Animation player_animated(player_skin, 14, 10, 1.f / 9.f, 0.5f, 0, 7, 10, 13);
-    my_player = Player(100, {5, 5}, player_animated,{25,20,20,35});
+    Animation player_animated(player_skin, 14, 10, 1.f / 9.f, 0.7f, 0, 7, 10, 13);
+    my_player = Player(100, {19, 15}, player_animated,{35,20,20,50});
     my_gun = Gun({my_player.get_position()}, "resources/wabbit_alpha.png", "resources/shot.mp3", 10, 0.5);
 
     zombie_texture = LoadTexture("resources/zombie.png");
@@ -61,8 +61,8 @@ void Game::update_zombie_spawning(float deltaTime) {
             zombie_spawn_timer = 0.0f;
 
             // Usar textura ya cargada
-            Animation zombie_animated(zombie_texture, 36, 8, 1.0f / 16.0f, 0.8f, 4, 11, 0, 0);
-            Rectangle hitBoxRec = {40,30,20,40};
+            Animation zombie_animated(zombie_texture, 36, 8, 1.0f / 16.0f, 1.2f, 4, 11, 0, 0);
+            Rectangle hitBoxRec = {65,60,25,40};
             enemies.emplace_back(
                 base_zombie_life,
                 zombie_spawn_position,
@@ -96,7 +96,8 @@ void Game::draw() {
 
     // Display current round
     DrawText(TextFormat("Round: %d", round), 20, 20, 30, RED);
-    DrawText(TextFormat("Enemies Left: %d", alive_zombies), GetScreenWidth() - 250, 20, 30, RED);
+    DrawText(TextFormat("Enemies Left: %d", alive_zombies), GetScreenWidth() - 270, GetScreenHeight() - 50, 30, RED);
+
 }
 
 // Update game logic

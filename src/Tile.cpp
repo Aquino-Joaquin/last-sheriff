@@ -29,7 +29,6 @@ Tile::Tile(Vector2 position, float depth, Color sideColor) {
 
 void Tile::draw() {
     Vector2 screenPos = Map::world_to_screen(position.x, position.y);
-    
     float h = depth * tile_height;
 
     // Define the four corners of the top face of the tile
@@ -38,31 +37,34 @@ void Tile::draw() {
     Vector2 bottom = { screenPos.x, screenPos.y + tile_height - h };
     Vector2 left   = { screenPos.x - tile_width / 2, screenPos.y + tile_height / 2 - h };
 
-    // Draw top face of the tile (two triangles)
-    DrawTriangle(top, bottom, right, sideColor);
-    DrawTriangle(bottom, top, left, sideColor);
+    // Define different shades for the top and sides
+    Color topColor     = sideColor;
+    Color rightColor   = Color{ (unsigned char)(sideColor.r * 0.8f), (unsigned char)(sideColor.g * 0.8f), (unsigned char)(sideColor.b * 0.8f), sideColor.a }; // Darker
+    Color leftColor    = Color{ (unsigned char)(sideColor.r * 0.6f), (unsigned char)(sideColor.g * 0.6f), (unsigned char)(sideColor.b * 0.6f), sideColor.a }; // Even darker
+
+    // Draw top face (two triangles)
+    DrawTriangle(top, bottom, right, topColor);
+    DrawTriangle(bottom, top, left, topColor);
 
     // Define and draw the right face
     Vector2 r1 = right;
     Vector2 r2 = { right.x, right.y + h };
     Vector2 b1 = bottom;
     Vector2 b2 = { bottom.x, bottom.y + h };
-    DrawTriangle(r1, b1, r2, sideColor);
-    DrawTriangle(r2, b1, b2, sideColor);
+    DrawTriangle(r1, b1, r2, rightColor);
+    DrawTriangle(r2, b1, b2, rightColor);
 
     // Define and draw the left face
     Vector2 l1 = left;
     Vector2 l2 = { left.x, left.y + h };
-    DrawTriangle(l1, l2, b1, sideColor);
-    DrawTriangle(l2, b2, b1, sideColor);
+    DrawTriangle(l1, l2, b1, leftColor);
+    DrawTriangle(l2, b2, b1, leftColor);
 
     // Draw edges to outline the top face
-    DrawLineV(top, right, DARKGRAY);
+    DrawLineV(top, right, DARKGRAY); 
     DrawLineV(right, bottom, DARKGRAY);
     DrawLineV(bottom, left, DARKGRAY);
     DrawLineV(left, top, DARKGRAY);
-
-
 }
 void Tile::drawCollisionEdges() {
     for (const auto& edge : collisionEdges) {
@@ -77,11 +79,6 @@ bool Tile::checkRectangleLineCollision(Rectangle rect, const std::vector<std::pa
     Vector2 r3 = { rect.x + rect.width, rect.y + rect.height };
     Vector2 r4 = { rect.x, rect.y + rect.height };
 
-    // Draw the rectangle edges for debugging purposes
-    DrawLineV(r1, r2, RED);
-    DrawLineV(r2, r3, RED);
-    DrawLineV(r3, r4, RED);
-    DrawLineV(r4, r1, RED);
 
     // Store the rectangle's edges as pairs of points
     Vector2 rectEdges[4][2] = {
