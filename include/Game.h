@@ -39,7 +39,7 @@ private:
     int zombies_to_spawn = 0;                  
     float zombie_spawn_timer = 0.0f;            
     float zombie_spawn_delay = 2.5f;            
-    Vector2 zombie_spawn_position = {20, 5};    
+    Vector2 zombie_spawn_position = {17, -19};    
     int base_zombie_life = 100;                 
     float zombie_speed = 0.1f;                  
     bool spawning = false;                      

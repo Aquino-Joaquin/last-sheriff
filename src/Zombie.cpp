@@ -24,43 +24,38 @@ void Zombie::follow_player(Player& my_player, Map& world_map, std::vector<Zombie
 
     bool moved = false;
 
-    // Movimiento en X
     if (fabs(diffX) > fabs(diffY)) {
         if (diffX > 0.1f) {
             float newX = position.x + step;
             Rectangle rectX = getRectangleAt(newX, position.y);
             if (world_map.is_walkable(rectX) && !collides_with_other_zombie(rectX, all_zombies)) {
                 position.x = newX;
-                animation_direction = 5; // Derecha
+                animation_direction = 5; // right
                 moving = true;
                 moved = true;
-                cout<<animation_direction<<endl;
             }
         } else if (diffX < -0.1f) {
             float newX = position.x - step;
             Rectangle rectX = getRectangleAt(newX, position.y);
             if (world_map.is_walkable(rectX) && !collides_with_other_zombie(rectX, all_zombies)) {
                 position.x = newX;
-                animation_direction = 1; // Izquierda
+                animation_direction = 1; // left
                 moving = true;
                 moved = true;
-                cout<<animation_direction<<endl;
 
             }
         }
     }
 
-    // Movimiento en Y si no se pudo mover en X
     if (!moved) {
         if (diffY > 0.1f) {
             float newY = position.y + step;
             Rectangle rectY = getRectangleAt(position.x, newY);
             if (world_map.is_walkable(rectY) && !collides_with_other_zombie(rectY, all_zombies)) {
                 position.y = newY;
-                animation_direction = 7; // Abajo
+                animation_direction = 7; // up
                 moving = true;
                 moved = true;
-                cout<<animation_direction<<endl;
 
             }
         } else if (diffY < -0.1f) {
@@ -68,10 +63,9 @@ void Zombie::follow_player(Player& my_player, Map& world_map, std::vector<Zombie
             Rectangle rectY = getRectangleAt(position.x, newY);
             if (world_map.is_walkable(rectY) && !collides_with_other_zombie(rectY, all_zombies)) {
                 position.y = newY;
-                animation_direction = 3; // Arriba
+                animation_direction = 3; // down
                 moving = true;
                 moved = true;
-                cout<<animation_direction<<endl;
 
             }
         }

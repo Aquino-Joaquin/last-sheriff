@@ -11,9 +11,7 @@ Robot::Robot(int life_robot, Vector2 position, Animation skin_animated,Rectangle
     this->life = life_robot;
     this->max_life = life_robot;
     this->position = position;
-
-    // Definí el área útil del sprite (ajustá según tu sprite)
-    this->hitboxOffset = hitBox; // (x, y, width, height)
+    this->hitboxOffset = hitBox; 
 }
 
 // Getter for robot's life
@@ -69,13 +67,13 @@ void Robot::draw_on_map() {
     DrawRectangle(bar_position.x, bar_position.y, bar_width * life_percent, bar_height, bar_color);
 
     // hitbox for debugging
-    Rectangle screenHitbox = {
-        map_position.x + hitboxOffset.x,
-        map_position.y + hitboxOffset.y,
-        hitboxOffset.width,
-        hitboxOffset.height
-    };
-    DrawRectangleLinesEx(screenHitbox, 1.0f, RED);
+    // Rectangle screenHitbox = {
+    //     map_position.x + hitboxOffset.x,
+    //     map_position.y + hitboxOffset.y,
+    //     hitboxOffset.width,
+    //     hitboxOffset.height
+    // };
+    // DrawRectangleLinesEx(screenHitbox, 1.0f, RED);
 }
 
 // Get screen rectangle for collision
