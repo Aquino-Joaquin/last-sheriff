@@ -1,111 +1,108 @@
-# Raylib-Quickstart
-A simple cross platform template for setting up a project with the bleeding edge raylib code.
-Works with C or C++.
+# 🤠 Last Sheriff
 
-## Supported Platforms
-Quickstart supports the main 3 desktop platforms:
-* Windows
-* Linux
-* MacOS
+**Last Sheriff** is an isometric survival game where you play as the last cowboy standing in a deserted town overrun by the undead. With each passing round, more zombies appear, becoming faster and stronger. Equipped with only your revolver and grit, you must survive as long as you can in the heart of the rotten West.
 
-# Naming projects
-Do not name your game project 'raylib', it will conflict with the raylib library.
+---
 
-# VSCode Users (all platforms)
-*Note* You must have a compiler toolchain installed in addition to vscode.
+## 👤 Developer
 
-* Download the quickstart
-* Rename the folder to your game name
-* Open the folder in VSCode
-* Run the build task ( CTRL+SHIFT+B or F5 )
-* You are good to go
+- Joaquin Aquino - [GitHub Profile](https://github.com/Aquino-Joaquin)
 
-# Windows Users
-There are two compiler toolchains available for windows, MinGW-W64 (a free compiler using GCC), and Microsoft Visual Studio
-## Using MinGW-W64
-* Double click the `build-MinGW-W64.bat` file
-* CD into the folder in your terminal
-* run `make`
-* You are good to go
+---
 
-### Note on MinGW-64 versions
-Make sure you have a modern version of MinGW-W64 (not mingw).
-The best place to get it is from the W64devkit from
-https://github.com/skeeto/w64devkit/releases
-or the version installed with the raylib installer
-#### If you have installed raylib from the installer
-Make sure you have added the path
+## 🎮 Game Description
 
-`C:\raylib\w64devkit\bin`
+In *Last Sheriff*, the player takes control of a lone cowboy who must defend a ghost town from waves of increasingly powerful zombies. The game features an isometric map made of tiles and a round-based enemy spawning system that scales difficulty over time.
 
-To your path environment variable so that the compiler that came with raylib can be found.
+---
 
-DO NOT INSTALL ANOTHER MinGW-W64 from another source such as msys2, you don't need it.
+## 💡 Features
 
-## Microsoft Visual Studio
-* Run `build-VisualStudio2022.bat`
-* double click the `.sln` file that is generated
-* develop your game
-* you are good to go
+- Isometric tile-based map with border tiles  
+- Player movement and shooting mechanics with smooth animations for the main character  
+- Animated zombies with various movement 
+- Wave-based zombie spawning with increasing difficulty  
+- Health and damage system for enemies  
+- Modular code structure using C++ classes  
 
-# Linux Users
-* CD into the build folder
-* run `./premake5 gmake2`
-* CD back to the root
-* run `make`
-* you are good to go
+---
 
-# MacOS Users
-* CD into the build folder
-* run `./premake5.osx gmake2`
-* CD back to the root
-* run `make`
-* you are good to go
+## 🛠️ Technologies Used
 
-# Output files
-The built code will be in the bin dir
+- C++  
+- Raylib  
+- Git & GitHub  
 
-# Working directories and the resources folder
-The example uses a utility function from `path_utils.h` that will find the resources dir and set it as the current working directory. This is very useful when starting out. If you wish to manage your own working directory you can simply remove the call to the function and the header.
+---
 
-# Changing to C++
-Simply rename `src/main.c` to `src/main.cpp` and re-run the steps above and do a clean build.
+## 📸 Screenshots
 
-# Using your own code
-Simply remove `src/main.c` and replace it with your code, and re-run the steps above and do a clean build.
+![Start Menu](images/start_menu.png)  
+![End Menu](images/end_menu.png) 
+![Gameplay](images/gameplay.png)
+![Zombies](images/zombies_following.png)
 
-# Building for other OpenGL targets
-If you need to build for a different OpenGL version than the default (OpenGL 3.3) you can specify an OpenGL version in your premake command line. Just modify the bat file or add the following to your command line
 
-## For OpenGL 1.1
-`--graphics=opengl11`
+---
+## 🎥 Video References
+- The following videos were used as references or inspiration during development:
+[Animate sprite](https://www.youtube.com/watch?v=VFOIMeEePW4&list=PPSV)
+[Shooting mechanics and game structure](https://www.youtube.com/watch?v=TGo3Oxdpr5o&list=PPSV)
+[Buttons](https://www.youtube.com/watch?v=0Ct9ZWEUm7M&list=PPSV)
+[Collision](https://www.youtube.com/watch?v=q5Y5u1c7qR0&list=PPSV)
 
-## For OpenGL 2.1
-`--graphics=opengl21`
+## 🚀 How to Run
 
-## For OpenGL 4.3
-`--graphics=opengl43`
+1. Clone the repository:
 
-## For OpenGLES 2.0
-`--graphics=opengles2`
+```bash
+git clone https://github.com/joaquinaquino/last-sheriff.git
+cd last-sheriff
 
-## For OpenGLES 3.0
-`--graphics=opengles3`
+## ⚙️ Setup and Build Instructions
 
-# License
-Copyright (c) 2020-2025 Jeffery Myers
+This project was started using the [Raylib-Quickstart](https://github.com/RobLoach/raylib-quickstart) template, a cross-platform starter for Raylib projects.
 
-This software is provided "as-is", without any express or implied warranty. In no event 
-will the authors be held liable for any damages arising from the use of this software.
+### Supported Platforms
+- Windows  
+- Linux  
+- MacOS  
 
-Permission is granted to anyone to use this software for any purpose, including commercial 
-applications, and to alter it and redistribute it freely, subject to the following restrictions:
+### Quickstart Instructions
 
-  1. The origin of this software must not be misrepresented; you must not claim that you 
-  wrote the original software. If you use this software in a product, an acknowledgment 
-  in the product documentation would be appreciated but is not required.
+**For all platforms using VSCode:**
 
-  2. Altered source versions must be plainly marked as such, and must not be misrepresented
-  as being the original software.
+1. Download or clone the Raylib-Quickstart template.  
+2. Rename the folder to `last-sheriff`.  
+3. Open the folder in VSCode.  
+4. Run the build task with `CTRL+SHIFT+B` or press `F5`.  
+5. The project should build and run successfully.  
 
-  3. This notice may not be removed or altered from any source distribution.
+---
+
+**Windows (MinGW-W64):**
+
+1. Double-click the `build-MinGW-W64.bat` file.  
+2. Open a terminal in the project folder.  
+3. Run `make`.  
+4. You are ready to go.  
+
+> Make sure you have a modern version of MinGW-W64, preferably from [W64devkit](https://github.com/skeeto/w64devkit/releases), or installed with the Raylib installer. Add the path `C:\raylib\w64devkit\bin` to your environment variables.
+
+---
+
+**Windows (Visual Studio):**
+
+1. Run `build-VisualStudio2022.bat`.  
+2. Open the generated `.sln` file in Visual Studio.  
+3. Build and run your game.  
+
+---
+
+**Linux:**
+
+```bash
+cd build
+./premake5 gmake2
+cd ..
+make
