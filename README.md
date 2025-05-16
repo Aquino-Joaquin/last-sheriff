@@ -58,7 +58,7 @@ In *Last Sheriff*, the player takes control of a lone cowboy who must defend a g
 ```bash
 git clone https://github.com/joaquinaquino/last-sheriff.git
 cd last-sheriff
-
+```
 ## ⚙️ Setup and Build Instructions
 
 This project was started using the [Raylib-Quickstart](https://github.com/RobLoach/raylib-quickstart) template, a cross-platform starter for Raylib projects.
@@ -106,3 +106,4 @@ cd build
 ./premake5 gmake2
 cd ..
 make
+```
