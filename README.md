@@ -46,10 +46,10 @@ In *Last Sheriff*, the player takes control of a lone cowboy who must defend a g
 ---
 ## 🎥 Video References
 - The following videos were used as references or inspiration during development:  
-  -[Animate sprite](https://www.youtube.com/watch?v=VFOIMeEePW4&list=PPSV)
-  -[Shooting mechanics and game structure](https://www.youtube.com/watch?v=TGo3Oxdpr5o&list=PPSV)
-  -[Buttons](https://www.youtube.com/watch?v=0Ct9ZWEUm7M&list=PPSV)
-  -[Collision](https://www.youtube.com/watch?v=q5Y5u1c7qR0&list=PPSV)
+  - [Animate sprite](https://www.youtube.com/watch?v=VFOIMeEePW4&list=PPSV)  
+  - [Shooting mechanics and game structure](https://www.youtube.com/watch?v=TGo3Oxdpr5o&list=PPSV)  
+  - [Buttons](https://www.youtube.com/watch?v=0Ct9ZWEUm7M&list=PPSV)  
+  - [Collision](https://www.youtube.com/watch?v=q5Y5u1c7qR0&list=PPSV)
 
 ## 🚀 How to Run
 
