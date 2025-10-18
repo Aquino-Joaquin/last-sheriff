@@ -59,6 +59,11 @@ In *Last Sheriff*, the player takes control of a lone cowboy who must defend a g
 git clone https://github.com/joaquinaquino/last-sheriff.git
 cd last-sheriff
 ```
+if you use ssh
+```bash
+git clone git@github.com:Aquino-Joaquin/last-sheriff.git
+cd last-sheriff
+```
 ## ⚙️ Setup and Build Instructions
 
 This project was started using the [Raylib-Quickstart](https://github.com/RobLoach/raylib-quickstart) template, a cross-platform starter for Raylib projects.
